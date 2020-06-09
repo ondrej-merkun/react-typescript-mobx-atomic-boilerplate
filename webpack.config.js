@@ -12,20 +12,42 @@ module.exports = {
     publicPath: PUBLIC_PATH,
   },
   resolve: {
-    extensions: ['.js', '.ts', '.tsx', '.sass'],
+    extensions: ['.js', '.ts', '.tsx', '.svg', '.png', '.jpg'],
     alias: {
       '@components': path.resolve(__dirname, 'src/components/'),
       '@stores': path.resolve(__dirname, 'src/stores/'),
       '@styles': path.resolve(__dirname, 'src/styles/'),
       '@helpers': path.resolve(__dirname, 'src/helpers/'),
       '@pages': path.resolve(__dirname, 'src/pages/'),
+      '@assets': path.resolve(__dirname, 'src/assets/'),
+      '@constants': path.resolve(__dirname, 'src/constants/'),
+      '@hooks': path.resolve(__dirname, 'src/hooks/'),
+      '@services': path.resolve(__dirname, 'src/services/'),
     },
   },
   module: {
     rules: [
       {
-        test: /\.s[ac]ss$/i,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-url-loader',
+            options: {
+              limit: 10000,
+            },
+          },
+        ],
+      },
+      {
+        test: /\.(png|jpg|gif)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 9192,
+            },
+          },
+        ],
       },
       {
         test: /\.ts(x?)$/i,
